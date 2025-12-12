@@ -15,6 +15,7 @@
 
 AShooterCharacter::AShooterCharacter()
 {
+	checkf(this, TEXT("crash constructor"));
 	// create the noise emitter component
 	PawnNoiseEmitter = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("Pawn Noise Emitter"));
 
@@ -24,6 +25,7 @@ AShooterCharacter::AShooterCharacter()
 
 void AShooterCharacter::BeginPlay()
 {
+	checkf(this, TEXT("crash begin play"));
 	Super::BeginPlay();
 
 	// reset HP to max

@@ -4,7 +4,7 @@
 #include "ShooterWeapon.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Engine/World.h"
-#include "ShooterProjectile.h"
+#include "NewBullet.h"
 #include "ShooterWeaponHolder.h"
 #include "Components/SceneComponent.h"
 #include "TimerManager.h"
@@ -130,6 +130,10 @@ void AShooterWeapon::switchBullet(float change)
 	}if (change < 0) {
 		currentBulletIndex = (currentBulletIndex - 1 + ProjectileClass.Num()) % ProjectileClass.Num();
 	}
+	FString indexString = FString::FromInt(currentBulletIndex);
+	if (GEngine) {
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::White, indexString);
+	}
 }
 
 void AShooterWeapon::Fire()
@@ -180,7 +184,7 @@ void AShooterWeapon::FireProjectile(const FVector& TargetLocation)
 	SpawnParams.Owner = GetOwner();
 	SpawnParams.Instigator = PawnOwner;
 
-	AShooterProjectile* Projectile = GetWorld()->SpawnActor<AShooterProjectile>(ProjectileClass[currentBulletIndex], ProjectileTransform, SpawnParams);
+	ANewBullet* Projectile = GetWorld()->SpawnActor<ANewBullet>(ProjectileClass[currentBulletIndex], ProjectileTransform, SpawnParams);
 
 	// play the firing montage
 	WeaponOwner->PlayFiringMontage(FiringMontage);
